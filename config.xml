@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>&lt;h1&gt;Installing WOdka&lt;/h1&gt;&#xd;
+&#xd;
+&lt;h3&gt;WOJenkins&lt;/h3&gt;&#xd;
+&lt;p&gt;This job automatically prepares a Jenkins build server to be able to build WOdka projects by cloning the &#xd;
+  WOJenkins build scripts into this job&apos;s &lt;a target=&quot;_new&quot; href=&quot;ws/WOJenkins&quot;&gt;workspace&lt;/a&gt; and then uses them &#xd;
+  to do the following:&lt;/p&gt;&#xd;
+&#xd;
+&lt;h3&gt;WOdka&lt;/h3&gt;&#xd;
+&lt;ol&gt;&#xd;
+  &lt;li&gt;Clones/Pulls the WOdka Git repository into the &lt;a target=&quot;_new&quot; href=&quot;ws/Wonder&quot;&gt;workspace&lt;/a&gt;.&lt;/li&gt;&#xd;
+  &lt;li&gt;Link Project Wonder Frameworks to &lt;code&gt;${JENKINS_HOME}/WOFrameworksRepository/WOdka&lt;/code&gt; directory.&lt;/li&gt;&#xd;
+  &lt;li&gt;Builds and installs Wodka into the &lt;code&gt;${JENKINS_HOME}/WOFrameworksRepository/WOdka&lt;/code&gt; directory.&lt;/li&gt;&#xd;
+&lt;/ol&gt;&#xd;
+&#xd;
+&lt;h3&gt;SampleApp&lt;/h3&gt;&#xd;
+&lt;p&gt;It will also build &apos;AppTeamWork&apos; app for demonstration, how to build a Sample App in WOdka.&lt;/p&gt;&#xd;
+&#xd;
+&lt;hr /&gt;&#xd;
+&lt;p&gt;This script was made 2013/02/16 by Ken Ishimoto&lt;/p&gt;</description>
+  <logRotator>
+    <daysToKeep>-1</daysToKeep>
+    <numToKeep>10</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>JAVA_COMPATIBILITY_VERSION</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>1.6</string>
+              <string>1.7</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>WODKA_JAVA_WO_EXTENSIONS</name>
+          <description>if &apos;true&apos; the WOdka WOJavaExtensions Version will be used, if &apos;false&apos; Wonder WOJavaExtensions Version will used instead.</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.2">
+    <scms>
+      <hudson.plugins.git.GitSCM plugin="git@1.1.26">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <name></name>
+            <refspec></refspec>
+            <url>git@github.com:ishimoto/WonderExtensionLaboratory.git</url>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+          <hudson.plugins.git.BranchSpec>
+            <name>**</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <disableSubmodules>false</disableSubmodules>
+        <recursiveSubmodules>false</recursiveSubmodules>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <authorOrCommitter>false</authorOrCommitter>
+        <clean>false</clean>
+        <wipeOutWorkspace>false</wipeOutWorkspace>
+        <pruneBranches>false</pruneBranches>
+        <remotePoll>false</remotePoll>
+        <ignoreNotifyCommit>false</ignoreNotifyCommit>
+        <useShallowClone>false</useShallowClone>
+        <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+        <gitTool>Git 1.8.1</gitTool>
+        <submoduleCfg class="list"/>
+        <relativeTargetDir>WOdka</relativeTargetDir>
+        <reference></reference>
+        <excludedRegions></excludedRegions>
+        <excludedUsers></excludedUsers>
+        <gitConfigName></gitConfigName>
+        <gitConfigEmail></gitConfigEmail>
+        <skipTag>false</skipTag>
+        <includedRegions></includedRegions>
+        <scmName>WOdka</scmName>
+      </hudson.plugins.git.GitSCM>
+      <hudson.plugins.git.GitSCM plugin="git@1.1.26">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <name>origin</name>
+            <refspec></refspec>
+            <url>https://github.com/ishimoto/WOJenkins.git</url>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+          <hudson.plugins.git.BranchSpec>
+            <name>**</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <disableSubmodules>false</disableSubmodules>
+        <recursiveSubmodules>false</recursiveSubmodules>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <authorOrCommitter>true</authorOrCommitter>
+        <clean>true</clean>
+        <wipeOutWorkspace>false</wipeOutWorkspace>
+        <pruneBranches>true</pruneBranches>
+        <remotePoll>false</remotePoll>
+        <ignoreNotifyCommit>false</ignoreNotifyCommit>
+        <useShallowClone>false</useShallowClone>
+        <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+        <gitTool>Git 1.8.1</gitTool>
+        <submoduleCfg class="list"/>
+        <relativeTargetDir>WOJenkins</relativeTargetDir>
+        <reference></reference>
+        <excludedRegions></excludedRegions>
+        <excludedUsers></excludedUsers>
+        <gitConfigName></gitConfigName>
+        <gitConfigEmail></gitConfigEmail>
+        <skipTag>false</skipTag>
+        <includedRegions></includedRegions>
+        <scmName>WOJenkins</scmName>
+      </hudson.plugins.git.GitSCM>
+    </scms>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>${WORKSPACE}/WOdka/WOdkaTemplates/Jenkins/setupWOdkaWorkspace.sh
+${WORKSPACE}/WOdka/WOdkaTemplates/Jenkins/wodkajenkins.sh</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Ant plugin="ant@1.1">
+      <targets>-propertyfile ${WORKSPACE}/Root/jenkins.build.properties
+-lib ${WORKSPACE}/WonderExtensionLaboratory/WOdkaTemplates/Templates/woproject.jar
+-buildfile ${WORKSPACE}/WOdka/AppTeamWork/wodkabuild.xml
+clean build
+</targets>
+      <antName>(Default)</antName>
+      <properties>labelNumber=$BUILD_NUMBER</properties>
+    </hudson.tasks.Ant>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>WOdka/**/dist/*.tar.gz</artifacts>
+      <latestOnly>false</latestOnly>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers/>
+</project>
